@@ -305,6 +305,56 @@
 
 			});
 
+	// Contact form.
+		var $contactForm = $('#contact-form'),
+			$formStatus = $('#form-status');
+
+		if ($contactForm.length > 0) {
+
+			$contactForm.on('submit', function(event) {
+				event.preventDefault();
+
+				var form = this,
+					$submitButton = $(form).find('input[type="submit"]'),
+					endpoint = 'https://formsubmit.co/ajax/' + ['represcz321', 'gmail.com'].join('@'),
+					formData = new FormData(form);
+
+				$submitButton.prop('disabled', true).val('Odesílám...');
+				$formStatus.text('Odesílání zprávy...');
+
+				fetch(endpoint, {
+					method: 'POST',
+					headers: {
+						'Accept': 'application/json'
+					},
+					body: formData
+				})
+					.then(function(response) {
+						return response.json().catch(function() {
+							return {};
+						}).then(function(data) {
+							if (!response.ok) {
+								throw new Error(data.message || 'Zprávu se nepodařilo odeslat.');
+							}
+
+							return data;
+						});
+					})
+					.then(function() {
+						form.reset();
+						$formStatus.text('Děkujeme, zpráva byla úspěšně odeslána.');
+					})
+					.catch(function() {
+						$formStatus.text('Odeslání se nepodařilo. Zkus to prosím znovu za chvíli.');
+					})
+					.finally(function() {
+						$submitButton.prop('disabled', false).val('Odeslat zprávu');
+					});
+
+			});
+
+		}
+
 		// Events.
 			$body.on('click', function(event) {
 

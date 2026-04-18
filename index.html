@@ -80,30 +80,32 @@
 						<!-- Contact -->
 							<article id="contact">
 								<h2 class="major">Kontakt</h2>
-								<p>Chceš se přidat do WhatsApp skupiny nebo napsat anonymněji? Ozvi se. První krok nemusí být velký – stačí zpráva.</p>
-								<p><strong>E-mail:</strong> <a href="mailto:podpora@chlapibezfiltru.cz">podpora@chlapibezfiltru.cz</a><br />
-								<strong>WhatsApp skupina:</strong> <a href="https://chat.whatsapp.com/LE2bEe7gM1oJp7LyDUBS7I">Připojit se do skupiny</a></p>
-								<form method="post" action="mailto:podpora@chlapibezfiltru.cz" enctype="text/plain">
+								<p>Chceš se přidat do WhatsApp skupiny nebo napsat soukromě? Pošli zprávu přes formulář níže. Odeslání proběhne přímo z webu, bez zobrazení e-mailové adresy.</p>
+								<p><strong>WhatsApp skupina:</strong> <a href="https://chat.whatsapp.com/LE2bEe7gM1oJp7LyDUBS7I">Připojit se do skupiny</a></p>
+								<form id="contact-form" method="post">
+									<input type="hidden" name="_subject" value="Nová zpráva z Chlapi bez filtru" />
+									<input type="hidden" name="_captcha" value="false" />
+									<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
 									<div class="fields">
 										<div class="field half">
 											<label for="name">Jméno nebo přezdívka</label>
-											<input type="text" name="jmeno" id="name" />
+											<input type="text" name="name" id="name" required />
 										</div>
 										<div class="field half">
 											<label for="email">E-mail</label>
-											<input type="email" name="email" id="email" />
+											<input type="email" name="email" id="email" required />
 										</div>
 										<div class="field">
 											<label for="message">Zpráva</label>
-											<textarea name="zprava" id="message" rows="5" placeholder="Napiš, s čím se potýkáš nebo že se chceš přidat do skupiny."></textarea>
+											<textarea name="message" id="message" rows="5" placeholder="Napiš, s čím se potýkáš nebo že se chceš přidat do skupiny." required></textarea>
 										</div>
 									</div>
 									<ul class="actions">
-										<li><input type="submit" value="Odeslat e-mail" class="primary" /></li>
+										<li><input type="submit" value="Odeslat zprávu" class="primary" /></li>
 										<li><input type="reset" value="Vymazat" /></li>
 									</ul>
+									<p id="form-status" aria-live="polite"></p>
 								</form>
-								<p><em>Poznámka: formulář otevře tvoji výchozí e-mailovou aplikaci. Pokud chceš, mohu ti příště doplnit i napojení na skutečné odesílání přes webový formulář.</em></p>
 							</article>
 
 						<!-- FAQ -->
