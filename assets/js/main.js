@@ -316,8 +316,14 @@
 
 				var form = this,
 					$submitButton = $(form).find('input[type="submit"]'),
-					endpoint = 'https://formsubmit.co/ajax/' + ['represcz321', 'gmail.com'].join('@'),
-					formData = new FormData(form);
+					endpoint = 'https://api.web3forms.com/submit',
+					formData = new FormData(form),
+					accessKey = formData.get('access_key');
+
+				if (!accessKey || accessKey === '0a3251b7-4b97-401f-a04c-0fbc475b42dd') {
+					$formStatus.text('Ještě je potřeba doplnit Web3Forms access key.');
+					return;
+				}
 
 				$submitButton.prop('disabled', true).val('Odesílám...');
 				$formStatus.text('Odesílání zprávy...');
@@ -333,7 +339,7 @@
 						return response.json().catch(function() {
 							return {};
 						}).then(function(data) {
-							if (!response.ok) {
+							if (!response.ok || data.success === false) {
 								throw new Error(data.message || 'Zprávu se nepodařilo odeslat.');
 							}
 
@@ -344,8 +350,8 @@
 						form.reset();
 						$formStatus.text('Děkujeme, zpráva byla úspěšně odeslána.');
 					})
-					.catch(function() {
-						$formStatus.text('Odeslání se nepodařilo. Zkus to prosím znovu za chvíli.');
+					.catch(function(error) {
+						$formStatus.text(error.message || 'Odeslání se nepodařilo. Zkus to prosím znovu za chvíli.');
 					})
 					.finally(function() {
 						$submitButton.prop('disabled', false).val('Odeslat zprávu');
