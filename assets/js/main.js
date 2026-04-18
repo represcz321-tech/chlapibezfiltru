@@ -316,12 +316,12 @@
 
 				var form = this,
 					$submitButton = $(form).find('input[type="submit"]'),
-					endpoint = 'https://api.web3forms.com/submit',
+					endpoint = form.getAttribute('action') || 'https://api.web3forms.com/submit',
 					formData = new FormData(form),
 					accessKey = formData.get('access_key');
 
-				if (!accessKey || accessKey === '0a3251b7-4b97-401f-a04c-0fbc475b42dd') {
-					$formStatus.text('Ještě je potřeba doplnit Web3Forms access key.');
+				if (!accessKey || String(accessKey).indexOf('PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE') !== -1) {
+					$formStatus.text('Ještě je potřeba doplnit Web3Forms access key v kontaktním formuláři.');
 					return;
 				}
 
