@@ -67,7 +67,24 @@
 
 	// Main.
 		var	delay = 325,
-			locked = false;
+			locked = false,
+			hashAliases = {
+				'#intro': '#uvod',
+				'#work': '#skupina',
+				'#about': '#pomoc',
+				'#contact': '#kontakt'
+			};
+
+		var normalizeHash = function(hash) {
+			return hashAliases[(hash || '').toLowerCase()] || hash;
+		};
+
+		var clearHash = function() {
+			if (history.pushState)
+				history.pushState('', document.title, window.location.pathname + window.location.search);
+			else
+				location.hash = '';
+		};
 
 		// Methods.
 			$main._show = function(id, initial) {
@@ -208,7 +225,7 @@
 				// Add state?
 					if (typeof addState != 'undefined'
 					&&	addState === true)
-						history.pushState(null, null, '#');
+						clearHash();
 
 				// Handle lock.
 
@@ -295,7 +312,8 @@
 					$('<div class="close">Close</div>')
 						.appendTo($this)
 						.on('click', function() {
-							location.hash = '';
+							clearHash();
+							$main._hide();
 						});
 
 				// Prevent clicks from inside article from bubbling.
@@ -391,9 +409,14 @@
 
 			$window.on('hashchange', function(event) {
 
+				var currentHash = normalizeHash(location.hash);
+
+				if (currentHash !== location.hash && history.replaceState)
+					history.replaceState('', document.title, currentHash);
+
 				// Empty hash?
-					if (location.hash == ''
-					||	location.hash == '#') {
+					if (currentHash == ''
+					||	currentHash == '#') {
 
 						// Prevent default.
 							event.preventDefault();
@@ -405,14 +428,14 @@
 					}
 
 				// Otherwise, check for a matching article.
-					else if ($main_articles.filter(location.hash).length > 0) {
+					else if ($main_articles.filter(currentHash).length > 0) {
 
 						// Prevent default.
 							event.preventDefault();
 							event.stopPropagation();
 
 						// Show article.
-							$main._show(location.hash.substr(1));
+							$main._show(currentHash.substr(1));
 
 					}
 
@@ -451,7 +474,12 @@
 				if (location.hash != ''
 				&&	location.hash != '#')
 					$window.on('load', function() {
-						$main._show(location.hash.substr(1), true);
+						var initialHash = normalizeHash(location.hash);
+
+						if (initialHash !== location.hash && history.replaceState)
+							history.replaceState('', document.title, initialHash);
+
+						$main._show(initialHash.substr(1), true);
 					});
 
 })(jQuery);
