@@ -1291,6 +1291,9 @@ input, select, textarea {
 			}
 
 		#header .logo {
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			width: 5.5rem;
 			height: 5.5rem;
 			line-height: 5.5rem;
@@ -1298,9 +1301,9 @@ input, select, textarea {
 			border-radius: 100%;
 		}
 
-			#header .logo .icon:before {
-				font-size: 2rem;
-			}
+		#header .logo .icon:before {
+			font-size: 2.5rem;
+		}
 
 		#header .content {
 			border-style: solid;
@@ -1441,14 +1444,16 @@ input, select, textarea {
 				}
 
 			#header .logo {
-				width: 4.75rem;
-				height: 4.75rem;
-				line-height: 4.75rem;
-			}
-
-				#header .logo .icon:before {
-					font-size: 1.75rem;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 4.75rem;
+					height: 4.75rem;
+					line-height: 4.75rem;
 				}
+
+					#header .logo .icon:before {
+						font-size: 2rem;
 
 			#header .content .inner {
 				padding: 2.5rem 1rem;
@@ -1659,3 +1664,4 @@ input, select, textarea {
 		body.is-preload #footer {
 			opacity: 0;
 		}
+
